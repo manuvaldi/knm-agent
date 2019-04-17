@@ -33,7 +33,7 @@ def main(argv):
    print 'URL is ', url
    print 'Server name is ', servername
 
-   contents = urllib2.urlopen(url).read()
+   contents = urllib2.urlopen(url+'/'+servername).read()
    networks = json.loads(contents)
    current_networks = libvirt_current_networks()
 
@@ -103,6 +103,7 @@ def create_network(net):
 
     cmd = 'kcli network -c '+net['cidr']+' '
 
+    # It's not the first server
     if server_index != 0 or not ("D" in list(net['options'])): cmd += ' --nodhcp --isolated '
 
     if ("I" in list(net['options'])): cmd += ' --isolated '
